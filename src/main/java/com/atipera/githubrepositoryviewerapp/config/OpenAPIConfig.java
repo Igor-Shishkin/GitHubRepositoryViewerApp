@@ -1,0 +1,43 @@
+package com.atipera.githubrepositoryviewerapp.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
+@Configuration
+public class OpenAPIConfig {
+    @Value("${app.openapi.dev-url}")
+    private String devUrl;
+
+    @Bean
+    public OpenAPI myOpenAPI() {
+        Server devServer = new Server();
+        devServer.setUrl(devUrl);
+        devServer.setDescription("Server URL in Development environment");
+
+        Contact contact = new Contact();
+        contact.setEmail("igor.shishkin.work@gmail.com");
+        contact.setName("Igor Shishkin");
+        contact.setUrl("https://www.linkedin.com/in/igor-shishkin/");
+
+        License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
+
+        Info info = new Info()
+                .title("GitHub Repositories Viewer APP")
+                .version("0.0.1")
+                .contact(contact)
+                .description("This application is a practical exercise from Atipera organization. The main purpose " +
+                        "of the application is to provide information about the repositories of a specific user " +
+                        "on the GitHub server.")
+                .license(mitLicense);
+
+        return new OpenAPI().info(info).servers(List.of(devServer));
+    }
+}
