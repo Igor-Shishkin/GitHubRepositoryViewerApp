@@ -16,6 +16,11 @@ The GitHub Repository API is a Spring Boot application designed to provide API c
 
 ## Usage
 
+### BY:
+ - swagger: http://localhost:8080/swagger-ui/index.html#/
+ - postman/browser: http://localhost:8080/api/github/get-repositories-info?username=USERNAME
+ - command Prompt: curl -X 'GET' \ 'http://localhost:8080/api/github/get-repositories-info?username=USERNAME' \ -H 'accept: */*'
+
 ### API Endpoints
 
 - **GET /api/github/get-repositories-info**
