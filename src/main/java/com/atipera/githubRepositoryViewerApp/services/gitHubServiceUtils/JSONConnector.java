@@ -1,6 +1,6 @@
-package com.atipera.githubrepositoryviewerapp.services.gitHubServiceUtils;
+package com.atipera.githubRepositoryViewerApp.services.gitHubServiceUtils;
 
-import com.atipera.githubrepositoryviewerapp.exceptions.UrlIsUnavailableException;
+import com.atipera.githubRepositoryViewerApp.exceptions.UrlIsUnavailableException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 

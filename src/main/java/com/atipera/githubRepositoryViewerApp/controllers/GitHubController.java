@@ -1,9 +1,9 @@
-package com.atipera.githubrepositoryviewerapp.controllers;
+package com.atipera.githubRepositoryViewerApp.controllers;
 
-import com.atipera.githubrepositoryviewerapp.exceptions.UrlIsUnavailableException;
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
-import com.atipera.githubrepositoryviewerapp.playload.response.MessageResponse;
-import com.atipera.githubrepositoryviewerapp.services.GitHubService;
+import com.atipera.githubRepositoryViewerApp.exceptions.UrlIsUnavailableException;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.playload.response.MessageResponse;
+import com.atipera.githubRepositoryViewerApp.services.GitHubService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.atipera.githubrepositoryviewerapp.exceptions;
+package com.atipera.githubRepositoryViewerApp.exceptions;
 
 public class UrlIsUnavailableException extends RuntimeException {
     public UrlIsUnavailableException(String message) {

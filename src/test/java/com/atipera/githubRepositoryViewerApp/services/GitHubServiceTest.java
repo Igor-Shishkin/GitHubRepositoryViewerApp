@@ -1,12 +1,12 @@
-package com.atipera.githubrepositoryviewerapp.services;
+package com.atipera.githubRepositoryViewerApp.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.atipera.githubrepositoryviewerapp.models.BranchInfo;
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
-import com.atipera.githubrepositoryviewerapp.services.gitHubServiceUtils.SearcherRepositoryInfoByUsername;
+import com.atipera.githubRepositoryViewerApp.models.BranchInfo;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.services.gitHubServiceUtils.SearcherRepositoryInfoByUsername;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;

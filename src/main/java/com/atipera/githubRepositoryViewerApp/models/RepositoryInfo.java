@@ -1,4 +1,4 @@
-package com.atipera.githubrepositoryviewerapp.models;
+package com.atipera.githubRepositoryViewerApp.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

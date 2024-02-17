@@ -1,4 +1,4 @@
-package com.atipera.githubrepositoryviewerapp;
+package com.atipera.githubRepositoryViewerApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

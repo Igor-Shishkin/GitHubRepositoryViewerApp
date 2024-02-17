@@ -1,9 +1,7 @@
-package com.atipera.githubrepositoryviewerapp.services.gitHubServiceUtils;
+package com.atipera.githubRepositoryViewerApp.services.gitHubServiceUtils;
 
-import com.atipera.githubrepositoryviewerapp.exceptions.UrlIsUnavailableException;
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

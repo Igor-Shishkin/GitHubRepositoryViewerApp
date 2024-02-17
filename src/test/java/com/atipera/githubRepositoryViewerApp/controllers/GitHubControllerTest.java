@@ -1,9 +1,9 @@
-package com.atipera.githubrepositoryviewerapp.controllers;
+package com.atipera.githubRepositoryViewerApp.controllers;
 
-import com.atipera.githubrepositoryviewerapp.exceptions.UrlIsUnavailableException;
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
-import com.atipera.githubrepositoryviewerapp.playload.response.MessageResponse;
-import com.atipera.githubrepositoryviewerapp.services.GitHubService;
+import com.atipera.githubRepositoryViewerApp.exceptions.UrlIsUnavailableException;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.playload.response.MessageResponse;
+import com.atipera.githubRepositoryViewerApp.services.GitHubService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

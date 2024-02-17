@@ -1,7 +1,7 @@
-package com.atipera.githubrepositoryviewerapp.services.gitHubServiceUtils;
+package com.atipera.githubRepositoryViewerApp.services.gitHubServiceUtils;
 
-import com.atipera.githubrepositoryviewerapp.models.BranchInfo;
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.models.BranchInfo;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;

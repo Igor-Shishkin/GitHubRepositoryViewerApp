@@ -1,7 +1,7 @@
-package com.atipera.githubrepositoryviewerapp.services;
+package com.atipera.githubRepositoryViewerApp.services;
 
-import com.atipera.githubrepositoryviewerapp.models.RepositoryInfo;
-import com.atipera.githubrepositoryviewerapp.services.gitHubServiceUtils.SearcherRepositoryInfoByUsername;
+import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
+import com.atipera.githubRepositoryViewerApp.services.gitHubServiceUtils.SearcherRepositoryInfoByUsername;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
