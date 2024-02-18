@@ -64,7 +64,7 @@ The GitHub Repository API is a Spring Boot application designed to provide API c
           ```json
           {
             "status": 404,
-            "message": "Error loading data: User not found"
+            "message": "User not found"
           }
           ```
 
