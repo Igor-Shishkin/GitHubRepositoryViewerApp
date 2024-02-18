@@ -4,6 +4,7 @@ import com.atipera.githubRepositoryViewerApp.models.Branch;
 import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
 import com.atipera.githubRepositoryViewerApp.playload.response.BranchDTO;
 import com.atipera.githubRepositoryViewerApp.playload.response.RepositoryResponseDTO;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -26,14 +27,13 @@ public class SearcherRepositoryInfoByUsername {
         this.jsonConnector = jsonConnector;
     }
 
-    public Set<RepositoryResponseDTO> getRepositoriesDTO(String username)
+    public ImmutableSet<RepositoryResponseDTO> getRepositoriesDTO(String username)
             throws IOException, URISyntaxException {
 
         String json = jsonConnector.getStringJsonForRepositoriesInfo(username).orElseThrow(IOException::new);
         Type type = new TypeToken<Set<RepositoryInfo>>(){}.getType();
         Set<RepositoryInfo> repositories = new Gson().fromJson(json, type);
-
-        return repositories.stream()
+        Set<RepositoryResponseDTO> repositoryResponseDTOS = repositories.stream()
                 .filter(repository -> !repository.fork())
                 .map(repositoryInfo -> {
                     try {
@@ -46,16 +46,19 @@ public class SearcherRepositoryInfoByUsername {
                     }
                 })
                 .collect(Collectors.toSet());
+
+        return ImmutableSet.copyOf(repositoryResponseDTOS);
     }
 
-    private Set<BranchDTO> getBranches(String repositoryName, String username) throws IOException, URISyntaxException {
+    private ImmutableSet<BranchDTO> getBranches(String repositoryName, String username) throws IOException, URISyntaxException {
         String json = jsonConnector.getStringJsonForBranchesInfo(username, repositoryName)
                 .orElseThrow(IOException::new);
         Type setType = new TypeToken<Set<Branch>>(){}.getType();
         Set<Branch> branches = new Gson().fromJson(json, setType);
-
-        return branches.stream()
+        Set<BranchDTO> branchDTOS = branches.stream()
                 .map(branch -> new BranchDTO(branch.name(), branch.commit().sha()))
                 .collect(Collectors.toSet());
+
+        return ImmutableSet.copyOf(branchDTOS);
     }
 }

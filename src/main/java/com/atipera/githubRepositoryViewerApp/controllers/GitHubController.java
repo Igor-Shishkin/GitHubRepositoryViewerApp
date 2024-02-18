@@ -2,6 +2,7 @@ package com.atipera.githubRepositoryViewerApp.controllers;
 
 import com.atipera.githubRepositoryViewerApp.playload.response.RepositoryResponseDTO;
 import com.atipera.githubRepositoryViewerApp.services.GitHubService;
+import com.google.common.collect.ImmutableSet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class GitHubController {
     public ResponseEntity<Set<RepositoryResponseDTO>> getRepositoriesInfoByUsername
             (@RequestParam String username) throws IOException, URISyntaxException {
 
-        Set<RepositoryResponseDTO> repositoriesInfo = gitHubService.getRepositoriesInfo(username.trim());
+        ImmutableSet<RepositoryResponseDTO> repositoriesInfo = gitHubService.getRepositoriesInfo(username.trim());
 
         return ResponseEntity.ok(repositoriesInfo);
     }
