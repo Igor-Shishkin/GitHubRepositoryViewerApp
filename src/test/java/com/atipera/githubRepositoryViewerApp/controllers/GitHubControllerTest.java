@@ -1,75 +1,80 @@
 package com.atipera.githubRepositoryViewerApp.controllers;
 
-import com.atipera.githubRepositoryViewerApp.exceptions.UrlIsUnavailableException;
-import com.atipera.githubRepositoryViewerApp.models.RepositoryInfo;
 import com.atipera.githubRepositoryViewerApp.playload.response.MessageResponse;
-import com.atipera.githubRepositoryViewerApp.services.GitHubService;
-import org.junit.jupiter.api.BeforeEach;
+import com.atipera.githubRepositoryViewerApp.playload.response.RepositoryResponseDTO;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class GitHubControllerTest {
-    private GitHubController gitHubController;
-    private GitHubService gitHubService;
 
-    @BeforeEach
-    void setUp() {
-        gitHubService = mock(GitHubService.class);
-        gitHubController = new GitHubController(gitHubService);
-    }
+    @Autowired
+    private WebTestClient webTestClient;
 
     @Test
-    void testAuthenticateUser_Success() throws IOException, IOException {
-        String username = "testUser";
-        List<RepositoryInfo> repositories = createSampleRepositories();
+    public void testGetRepositoriesInfoEndpoint() {
+        String username = "user";
 
-        when(gitHubService.getRepositoriesInfo(username)).thenReturn(repositories);
+        webTestClient.get()
+                .uri("api/github/get-repositories-info?username=" + username)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(RepositoryResponseDTO.class)
+                .consumeWith(response -> {
+                    List<RepositoryResponseDTO> repositories = response.getResponseBody();
+                    assertNotNull(repositories);
+                    assertFalse(repositories.isEmpty());
 
-        ResponseEntity<?> responseEntity = gitHubController.getRepositoriesInfoByUsername(username);
+                    for (RepositoryResponseDTO repository : repositories) {
+                        assertNotNull(repository.repositoryName());
+                        assertNotNull(repository.ownerLogin());
+                        assertNotNull(repository.branches());
+                    }
 
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isEqualTo(repositories);
+                    //The verification is relevant at the moment, the repository data may change over time!
+                    assertThat(
+                            repositories.stream()
+                            .anyMatch(repository -> repository.repositoryName().equals("crux-ports")))
+                            .isTrue();
+                    //is forked repositories filtered
+                    assertThat(
+                            repositories.stream()
+                                    .anyMatch(repository -> repository.repositoryName().equals("bitmap-fonts")))
+                            .isFalse();
+                });
     }
-
     @Test
-    void testAuthenticateUser_UrlIsUnavailableException() throws IOException {
-        // Arrange
-        String username = "testUser";
-        when(gitHubService.getRepositoriesInfo(username)).thenThrow(new UrlIsUnavailableException("URL is unavailable"));
+    public void testGetRepositoriesInfoEndpointURIException() {
+        String username = "us    er";
 
-        ResponseEntity<?> responseEntity = gitHubController.getRepositoriesInfoByUsername(username);
-
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
+        webTestClient.get()
+                .uri("api/github/get-repositories-info?username=" + username)
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody(MessageResponse.class)
+                .consumeWith(response -> {
+                    assertThat(response.getResponseBody()).isNotNull();
+                    assertThat(response.getResponseBody().message()).isEqualTo("Error during construction URL");
+                });
     }
-
     @Test
-    void testAuthenticateUser_IOException() throws IOException {
-        String username = "testUser";
-        when(gitHubService.getRepositoriesInfo(username)).thenThrow(new IOException("IO Exception"));
+    public void testGetRepositoriesInfoEndpointIOException() {
+        String username = "user_____999999888888888!";
 
-        ResponseEntity<?> responseEntity = gitHubController.getRepositoriesInfoByUsername(username);
-
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
+        webTestClient.get()
+                .uri("api/github/get-repositories-info?username=" + username)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody(MessageResponse.class)
+                .consumeWith(response -> {
+                    assertThat(response.getResponseBody()).isNotNull();
+                    assertThat(response.getResponseBody().message()).isEqualTo("User not found");
+                });
     }
-
-    private List<RepositoryInfo> createSampleRepositories() {
-        return List.of(
-                new RepositoryInfo(),
-                new RepositoryInfo()
-        );
-    }
-
 }
