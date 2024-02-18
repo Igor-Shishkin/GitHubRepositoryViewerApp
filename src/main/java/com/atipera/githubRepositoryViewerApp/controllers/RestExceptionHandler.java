@@ -24,6 +24,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             status = HttpStatus.NOT_FOUND;
             message = "User not found";
         } else if (exception instanceof URISyntaxException) {
+            status = HttpStatus.I_AM_A_TEAPOT;
             message = "Error during construction URL";
         } else {
             message = "There was an error processing your request";
